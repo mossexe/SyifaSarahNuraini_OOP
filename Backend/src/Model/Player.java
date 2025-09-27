@@ -1,46 +1,67 @@
 package Model;
 
-import java.util.UUID;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-public class Player implements ShowDetail {
-    private int highscore, totalCoins, totalDistance;
+public class Player implements ShowDetail{
+    private UUID playerId;
     private String username;
-    private UUID playerID;
+    private int highScore;
+    private int totalCoins;
+    private int totalDistance;
     private LocalDateTime createdAt;
 
-    public Player (String username){
+    public Player(String username) {
+        this.playerId = UUID.randomUUID();
         this.username = username;
-        this.playerID = UUID.randomUUID();
-        this.createdAt = LocalDateTime.now();
-        this.highscore = 0;
+        this.highScore = 0;
         this.totalCoins = 0;
         this.totalDistance = 0;
-    }
-    public UUID getPlayerID() {
-        return playerID;
+        this.createdAt = LocalDateTime.now();
     }
 
-    public void updatehighscore(int newscore){
-        this.highscore = newscore;
+    public UUID getPlayerId() {
+        return playerId;
     }
 
-    public void getCoins(int coins){
+    public void updateHighScore(int score) {
+        if (score > this.highScore) {
+            this.highScore = score;
+        }
+    }
+
+    public void addCoins(int coins) {
         this.totalCoins += coins;
     }
 
-    public void addDistance (int newdistance){
-        this.totalDistance += newdistance;
+    public void addDistance(int distance) {
+        this.totalDistance += distance;
     }
 
     @Override
-    public void showDetails(){
+    public void showDetail() {
+        System.out.println("Player ID: " + playerId);
         System.out.println("Username: " + username);
-        System.out.println("Highscore: " + highscore);
+        System.out.println("High Score: " + highScore);
         System.out.println("Total Coins: " + totalCoins);
         System.out.println("Total Distance: " + totalDistance);
         System.out.println("Created At: " + createdAt);
+        System.out.println();
+    }
 
-        System.out.println("--------------------------------------------------");
+    public Object getUsername() {
+        return username;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public int getTotalCoins() {
+        return totalCoins;
+    }
+
+    public int getTotalDistance() {
+        return totalDistance;
     }
 }

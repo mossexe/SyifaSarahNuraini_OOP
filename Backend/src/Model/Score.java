@@ -1,50 +1,57 @@
 package Model;
 
-import java.util.UUID;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-public class Score implements ShowDetail{
-    private UUID playerID;
-    private int value, coinsCollected, distance;
+public class Score {
+    private UUID scoreId;
+    private UUID playerId;
+    private Player player;
+    private int value;
+    private int coinsCollected;
+    private int distance;
     private LocalDateTime createdAt;
-    private UUID ScoreID;
 
-    public Score(UUID playerID, int value, int coinsCollected, int distance) {
-        this.playerID = playerID;
-        this.value = value;
+    public Score(UUID playerId, int score, int coinsCollected, int distance) {
+        this.scoreId = UUID.randomUUID();
+        this.playerId = playerId;
+        this.value = score;
         this.coinsCollected = coinsCollected;
         this.distance = distance;
         this.createdAt = LocalDateTime.now();
     }
 
-    public UUID getScoreID() {
-        return ScoreID;
-    }
-
-    public int getValue(){
-            return value;
-        }
-
-        public int getCoinsCollected(){
-            return coinsCollected;
-        }
-
-        public int getDistance(){
-            return distance;
-        }
-
-        public int getPlayerID(){
-            return playerID;
-        }
-
-    @Override
-    public void showDetail(){
-        System.out.println("ScoreID: " + ScoreID);
-        System.out.println("PlayerID: " + playerID);
-        System.out.println("Value: " + value);
-        System.out.println("CoinsCollected: " + coinsCollected);
+    public void showDetail() {
+        System.out.println("Score ID: " + scoreId);
+        System.out.println("Player ID: " + playerId);
+        System.out.println("Score Value: " + value);
+        System.out.println("Coins Collected: " + coinsCollected);
         System.out.println("Distance: " + distance);
-        System.out.println("CreatedAt: " + createdAt);
+        System.out.println("Created At: " + createdAt);
+        System.out.println();
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public int getCoinsCollected() {
+        return coinsCollected;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public Object getPlayerId() {
+        return playerId;
+    }
+
+    public UUID getScoreId() {
+        return scoreId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }
