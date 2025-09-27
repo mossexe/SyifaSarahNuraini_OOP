@@ -2,6 +2,7 @@ package Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Score {
     private UUID scoreId;
@@ -43,7 +44,7 @@ public class Score {
         return distance;
     }
 
-    public Object getPlayerId() {
+    public UUID getPlayerId() {
         return playerId;
     }
 
