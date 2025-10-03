@@ -1,7 +1,6 @@
 package Repository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class BaseRepository<T, ID> {
     Map<ID, T> dataMap = new HashMap<>();
@@ -15,13 +14,22 @@ public abstract class BaseRepository<T, ID> {
         return new ArrayList<>(allData);
     }
 
-    public abstract void save(T entity);
-    public abstract ID getId(T entity);
-}
-
     public void deleteById(ID id) {
         T entity = dataMap.remove(id);
         if (entity != null) {
-        allData.remove(entity);
+            allData.remove(entity);
+        }
     }
+
+    public void delete(T entity) {
+        ID id = getId(entity);
+        deleteById(id);
+    }
+
+    public boolean existById(ID id) {
+        return dataMap.containsKey(id);
+    }
+
+    public abstract void save(T entity);
+    public abstract ID getId(T entity);
 }

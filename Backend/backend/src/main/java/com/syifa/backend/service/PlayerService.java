@@ -1,21 +1,22 @@
-package Service;
+package com.syifa.backend.Service;
 
-import Model.Player;
-import Model.Score;
-import Repository.PlayerRepository;
-import Repository.ScoreRepository;
+import com.syifa.backend.Model.Player;
+import com.syifa.backend.Model.Score;
+import com.syifa.backend.Repository.PlayerRepository;
+import com.syifa.backend.Repository.ScoreRepository;
+import com.syifa.backend.Repository.PlayerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class PlayerService {
-
+    @Autowired
     private PlayerRepository playerRepository;
-
-    public PlayerService(PlayerRepository playerRepository) {
-        this.playerRepository = playerRepository;
-    }
 
     /**
      * Create a new player
@@ -24,11 +25,10 @@ public class PlayerService {
      * @throws RuntimeException if username already exists
      */
     public Player createPlayer(Player player) {
-        if (existsByUsername(player.getUsername())) {
+        if (playerRepository.existsByUsername(player.getUsername())) {
             throw new RuntimeException("Username already exists: " + player.getUsername());
         }
-        playerRepository.save(player);
-        return player;
+        return playerRepository.save(player);
     }
 
     /**
@@ -79,16 +79,16 @@ public class PlayerService {
         }
 
         // Update high score jika lebih tinggi
-        if (updatedPlayer.getHighScore() > existingPlayer.getHighScore()) {
+        if (updatedPlayer.getHighScore() != null) {
             existingPlayer.setHighScore(updatedPlayer.getHighScore());
         }
 
         // Update fields lainnya (cara sama)
-        if (updatedPlayer.getTotalCoins() > existingPlayer.getTotalCoins()) {
-            existingPlayer.setTotalCoins(updatedPlayer.getTotalCoins());
+        if (updatedPlayer.getTotalCoins() > != null) {
+            existingPlayer.setTotalCoins(updatedPlayer.getTotalCoins()));
         }
 
-        if (updatedPlayer.getTotalDistance() > existingPlayer.getTotalDistance()) {
+        if (updatedPlayer.getTotalDistance() != null) {
             existingPlayer.setTotalDistance(updatedPlayer.getTotalDistance());
         }
 
@@ -102,9 +102,11 @@ public class PlayerService {
      * @throws RuntimeException if player not found
      */
     public void deletePlayer(UUID playerId) {
-        Player player = playerRepository.findById(playerId)
-                .orElseThrow(() -> new RuntimeException("Player not found with ID: " + playerId));
-        playerRepository.deleteById(playerId);
+        if (!playerRepository.existsById(playerId)) {
+            throw new RuntimeException("Player not found"));
+        }
+        playerRepository.deleteById(playerId).
+
     }
 
     public void deletePlayerByUsername(String username) {
@@ -121,7 +123,7 @@ public class PlayerService {
      * @param distanceTravelled distance travelled in this game
      * @return the updated player
      */
-    public Player updatePlayerStats(UUID playerId, int scoreValue, int coinsCollected, int distanceTravelled) {
+    public Player updatePlayerStats(UUID playerId, Integer scoreValue, Integer coinsCollected, Integer distanceTravelled) {
         Player player = playerRepository.findById(playerId)
                 .orElseThrow(() -> new RuntimeException("Player not found with ID: " + playerId));
 
@@ -166,7 +168,7 @@ public class PlayerService {
      * @param username the username to check
      * @return true if username exists, false otherwise
      */
-    public boolean existsByUsername(String username) {
+    public boolean  isUsernameExists (String username) {
         return playerRepository.findByUsername(username).isPresent();
     }
 }
