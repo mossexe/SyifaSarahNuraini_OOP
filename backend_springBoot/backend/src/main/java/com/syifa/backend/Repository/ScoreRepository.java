@@ -21,10 +21,10 @@ public interface ScoreRepository extends JpaRepository<Score, UUID> {
     @Query("SELECT s FROM Score s WHERE s.playerId = :playerId ORDER BY s.value DESC")
     List<Score> findTopScoresByPlayerId(@Param("playerId") UUID playerId);
 
-    @Query("SELECT SUM(s.coinsCollected) FROM Score s WHERE s.playerId = :player.Id")
+    @Query("SELECT SUM(s.coinsCollected) FROM Score s WHERE s.playerId = :playerId")
     Integer getTotalCoinsByPlayerId(@Param("playerId") UUID playerId);
 
-    @Query("SELECT SUM(s.distanceTravelled) FROM Score s WHERE s.playerId = :player.Id")
+    @Query("SELECT SUM(s.distanceTravelled) FROM Score s WHERE s.playerId = :playerId")
     Integer getTotalDistanceTravelledByPlayerId(@Param("playerId") UUID playerId);
 
 }
