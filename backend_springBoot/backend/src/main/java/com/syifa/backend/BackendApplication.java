@@ -2,6 +2,7 @@ package com.syifa.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import jakarta.persistence.*;
 
 @SpringBootApplication
 public class BackendApplication {
