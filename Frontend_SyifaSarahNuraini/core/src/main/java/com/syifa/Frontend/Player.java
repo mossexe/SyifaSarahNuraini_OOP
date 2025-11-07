@@ -16,7 +16,6 @@ public class Player {
     private final float height = 64f;
 
     private Rectangle collider;
-
     private float baseSpeed = 300f;
     private float distanceTraveled = 0f;
 
