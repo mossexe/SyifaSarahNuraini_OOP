@@ -1,86 +1,98 @@
 package com.syifa.Frontend;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Player {
     private Vector2 position;
+    private Vector2 startPosition;
     private Vector2 velocity;
-
-    private final float gravity = 2000f;
-    private final float force = 4500f;
-    private final float maxVerticalSpeed = 700f;
-
-    private final float width = 64f;
-    private final float height = 64f;
-
     private Rectangle collider;
-    private float baseSpeed = 300f;
-    private float distanceTraveled = 0f;
 
-    public Player(float startX, float startY) {
-        position = new Vector2(startX, startY);
-        velocity = new Vector2(baseSpeed, 0);
-        collider = new Rectangle(position.x, position.y, width, height);
+    private float width = 50f;
+    private float height = 50f;
+
+    private float gravity = -800f;
+    private float flyForce = 400f;
+    private float maxVelocityY = 500f;
+    private float minVelocityY = -500f;
+
+    private float distanceTraveled = 0f;
+    private float moveSpeed = 200f;
+
+    private boolean isDead = false;
+
+    public Player(Vector2 startPosition) {
+        this.startPosition = new Vector2(startPosition);
+        this.position = new Vector2(startPosition);
+        this.velocity = new Vector2(0, 0);
+        this.collider = new Rectangle(position.x, position.y, width, height);
     }
 
     public void update(float delta, boolean isFlying) {
-        updateDistanceAndSpeed(delta);
-        applyGravity(delta);
-        if (isFlying) fly(delta);
-        updatePosition(delta);
-        updateCollider();
-    }
+        if (isDead) {
+            return;
+        }
 
-    private void updateDistanceAndSpeed(float delta) {
-        distanceTraveled += velocity.x * delta;
-    }
+        // Apply gravity or fly force
+        if (isFlying) {
+            velocity.y += flyForce * delta;
+        } else {
+            velocity.y += gravity * delta;
+        }
 
-    private void updatePosition(float delta) {
-        position.x += velocity.x * delta;
+        // Clamp velocity
+        if (velocity.y > maxVelocityY) velocity.y = maxVelocityY;
+        if (velocity.y < minVelocityY) velocity.y = minVelocityY;
+
+        // Update position
         position.y += velocity.y * delta;
+
+        // Update horizontal distance
+        distanceTraveled += moveSpeed * delta;
+
+        // Update collider
+        collider.set(position.x, position.y, width, height);
     }
 
-    private void applyGravity(float delta) {
-        velocity.y -= gravity * delta;
-        velocity.x = baseSpeed;
-
-        if (velocity.y > maxVerticalSpeed)
-            velocity.y = maxVerticalSpeed;
-        if (velocity.y < -maxVerticalSpeed)
-            velocity.y = -maxVerticalSpeed;
-    }
-
-    private void fly(float delta) {
-        velocity.y += force * delta;
-    }
-
-    private void updateCollider() {
-        collider.setPosition(position.x, position.y);
-    }
-
-    public void checkBoundaries(Ground ground, float ceilingY) {
-        if (ground.isColliding(collider)) {
+    public void checkBoundaries(Ground ground, float screenHeight) {
+        // Check ground collision
+        if (position.y <= ground.getTopY()) {
             position.y = ground.getTopY();
             velocity.y = 0;
-            updateCollider();
         }
-        if (position.y + height > ceilingY) {
-            position.y = ceilingY - height;
+
+        // Check ceiling collision
+        if (position.y + height >= screenHeight) {
+            position.y = screenHeight - height;
             velocity.y = 0;
-            updateCollider();
         }
     }
 
-    public void renderShape(ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(0.2f, 0.8f, 0.3f, 1f);
+    public void die() {
+        isDead = true;
+        velocity.set(0, 0);
+    }
+
+    public void reset() {
+        isDead = false;
+        position.set(startPosition);
+        velocity.set(0, 0);
+        distanceTraveled = 0f;
+    }
+
+    public void render(ShapeRenderer shapeRenderer) {
         shapeRenderer.rect(position.x, position.y, width, height);
     }
 
     // Getters
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Rectangle getCollider() {
+        return collider;
     }
 
     public float getWidth() {
@@ -91,15 +103,11 @@ public class Player {
         return height;
     }
 
-    public Rectangle getCollider() {
-        return collider;
-    }
-
     public float getDistanceTraveled() {
-        return distanceTraveled / 10f;
+        return distanceTraveled;
     }
 
-    public float getX() {
-        return position.x;
+    public boolean isDead() {
+        return isDead;
     }
 }

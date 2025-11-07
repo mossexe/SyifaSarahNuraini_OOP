@@ -2,6 +2,8 @@ package com.syifa.Frontend.obstacles;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
+
 
 import java.awt.*;
 
@@ -24,37 +26,38 @@ public abstract class BaseObstacle {
         updateCollider();
     }
 
-    public void render(ShapeRenderer shapeRenderer){
-
+    public void render(ShapeRenderer shapeRenderer) {
+        if (active) {
+            drawShape(shapeRenderer);
+        }
     }
 
-    public boolean isColliding(Rectangle playerCollider){
-        if
+    public boolean isColliding(Rectangle playerCollider) {
+        return active && collider.overlaps(playerCollider);
     }
 
     public boolean isActive() {
         return active;
     }
 
-    public boolean isOffScreenCamera(float cameraLeftEdge){
-
+    public boolean isOffScreenCamera(float cameraLeftEdge) {
+        return position.x + getRenderWidth() < cameraLeftEdge;
     }
 
     protected abstract void updateCollider();
     protected abstract void drawShape(ShapeRenderer shapeRenderer);
     protected abstract float getRenderWidth();
 
-    public void setActive(boolean active){
+    public void setActive(boolean active) {
         this.active = active;
     }
 
-    public void setPosition(float x, float y){
-        position.set(x,y);
+    public void setPosition(float x, float y) {
+        this.position.set(x, y);
         updateCollider();
     }
 
-    public Vector2 getPosition(){
+    public Vector2 getPosition() {
         return position;
     }
-
 }

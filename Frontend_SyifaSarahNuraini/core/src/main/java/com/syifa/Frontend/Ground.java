@@ -8,7 +8,6 @@ public class Ground {
     private static final float GROUND_HEIGHT = 50f;
     private Rectangle collider;
 
-    // ✅ Proper constructor (not recursive)
     public Ground() {
         collider = new Rectangle(0, 0, Gdx.graphics.getWidth() * 2, GROUND_HEIGHT);
     }
@@ -31,4 +30,9 @@ public class Ground {
         shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1f);
         shapeRenderer.rect(collider.x, collider.y, collider.width, collider.height);
     }
+
+    public void render(ShapeRenderer shapeRenderer) {
+        shapeRenderer.rect(0, 0, Gdx.graphics.getWidth() * 2, GROUND_HEIGHT);
+    }
+
 }
