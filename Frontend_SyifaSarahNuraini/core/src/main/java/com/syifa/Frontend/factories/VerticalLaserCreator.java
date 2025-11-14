@@ -2,9 +2,9 @@ package com.syifa.frontend.factories;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.nama.frontend.obstacles.BaseObstacle;
-import com.nama.frontend.obstacles.VerticalLaser;
-import com.nama.frontend.pools.VerticalLaserPool;
+import com.syifa.frontend.obstacles.BaseObstacle;
+import com.syifa.frontend.obstacles.VerticalLaser;
+import com.syifa.frontend.pools.VerticalLaserPool;
 import java.util.List;
 import java.util.Random;
 

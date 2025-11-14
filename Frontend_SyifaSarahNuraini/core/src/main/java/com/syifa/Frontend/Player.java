@@ -14,11 +14,9 @@ public class Player {
     private float width = 64f;
     private float height = 64f;
 
-    // Speed system
     private float baseSpeed = 300f;
     private float distanceTraveled = 0f;
 
-    // Death system
     private boolean isDead = false;
     private Vector2 startPosition;
 
@@ -49,23 +47,18 @@ public class Player {
 
 
     private void updateDistanceAndSpeed(float delta) {
-        // Track distance traveled
         distanceTraveled += velocity.x * delta;
     }
 
     private void updatePosition(float delta) {
-        // Move forward constantly
         position.x += velocity.x * delta;
-        // Apply vertical movement (gravity/jetpack)
         position.y += velocity.y * delta;
     }
 
     private void applyGravity(float delta) {
         velocity.y -= gravity * delta;
-        // Keep forward speed constant with current speed
         velocity.x = baseSpeed;
 
-        // Clamp vertical velocity to max speed
         if (velocity.y < -maxVerticalSpeed) {
             velocity.y = -maxVerticalSpeed;
         } else if (velocity.y > maxVerticalSpeed) {
@@ -84,20 +77,17 @@ public class Player {
     }
 
     public void checkBoundaries(Ground ground, float ceilingY) {
-        // Ground collision
         if (ground.isColliding(collider)) {
             position.y = ground.getTopY();
             velocity.y = 0;
         }
 
-        // Ceiling collision
         if (position.y + height > ceilingY) {
             position.y = ceilingY - height;
             velocity.y = 0;
         }
     }
 
-    // Debug
     public void renderShape(ShapeRenderer shapeRenderer) {
         shapeRenderer.setColor(0f, 1f, 0f, 1f);
         shapeRenderer.rect(position.x, position.y, width, height);
@@ -116,7 +106,6 @@ public class Player {
         distanceTraveled = 0f;
     }
 
-    // Getters
     public Vector2 getPosition() {
         return position;
     }

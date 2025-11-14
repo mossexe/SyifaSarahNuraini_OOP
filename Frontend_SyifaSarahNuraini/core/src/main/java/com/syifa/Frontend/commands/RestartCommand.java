@@ -1,20 +1,19 @@
 package com.syifa.frontend.commands;
 
-import com.syifa.frontend.GameManager;
 import com.syifa.frontend.Player;
+import com.syifa.frontend.GameManager;
 
-import static com.badlogic.gdx.graphics.Colors.reset;
+public class RestartCommand implements Command {
+    private Player player;
+    private GameManager gameManager;
 
-public class RestartCommand {
-    public Player player;
-    public GameManager gameManager;
-
-    public RestartCommand (Player player, GameManager gameManager){
+    public RestartCommand(Player player, GameManager gameManager) {
         this.player = player;
         this.gameManager = gameManager;
     }
 
-    public void execute(){
+    @Override
+    public void execute() {
         player.reset();
         gameManager.setScore(0);
     }

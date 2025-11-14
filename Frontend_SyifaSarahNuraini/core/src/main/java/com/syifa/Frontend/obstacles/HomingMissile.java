@@ -38,11 +38,10 @@ public class HomingMissile extends BaseObstacle {
         if (target == null || !active) return;
 
         if (isTargetingPlayer()) {
-            Vector2 targetPosition = target.getPosition(); // Ambil Posisi Player
-            velocity.set(targetPosition).sub(position).nor().scl(speed); // Mengatur velocity untuk mendekati player
+            Vector2 targetPosition = target.getPosition();
+            velocity.set(targetPosition).sub(position).nor().scl(speed);
         }
 
-        // Always move with current velocity
         position.add(velocity.x * delta, velocity.y * delta);
         updateCollider();
     }

@@ -32,9 +32,8 @@ public abstract class BaseObstacle {
         return active && collider.overlaps(playerCollider);
     }
 
-    // Check if obstacle is behind the camera (off-screen to the left)
     public boolean isOffScreenCamera(float cameraLeftEdge) {
-        return position.x + getRenderWidth() < cameraLeftEdge - 100; // Buffer behind camera
+        return position.x + getRenderWidth() < cameraLeftEdge - 100;
     }
 
     public void setActive(boolean active) {
@@ -54,9 +53,9 @@ public abstract class BaseObstacle {
         return position;
     }
 
-    protected abstract void updateCollider(); // Abstract method for specific collider update
+    protected abstract void updateCollider();
 
-    protected abstract void drawShape(ShapeRenderer shapeRenderer); // Abstract method for specific drawing
+    protected abstract void drawShape(ShapeRenderer shapeRenderer);
 
-    protected abstract float getRenderWidth(); // Abstract method for specific render width
+    protected abstract float getRenderWidth();
 }
