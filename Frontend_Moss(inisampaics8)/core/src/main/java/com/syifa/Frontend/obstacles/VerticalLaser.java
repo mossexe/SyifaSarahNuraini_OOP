@@ -1,11 +1,20 @@
-package com.syifa.frontend.obstacles;
+package com.syifa.Frontend.obstacles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.syifa.Frontend.obstacles.BaseObstacle;
+import com.syifa.Frontend.pools.VerticalLaserPool;
+import java.util.List;
+import java.util.Random;
 
-public class HorizontalLaser extends BaseObstacle {
-    public HorizontalLaser(Vector2 startPosition, int length) {
+public class VerticalLaser extends BaseObstacle {
+    private final VerticalLaserPool pool = new VerticalLaserPool();
+    private static final float MIN_HEIGHT = 100f;
+    private static final float MAX_HEIGHT = 300f;
+
+    public VerticalLaser(Vector2 startPosition, int length) {
         super(startPosition, length);
     }
 
@@ -16,7 +25,7 @@ public class HorizontalLaser extends BaseObstacle {
 
     @Override
     protected void updateCollider() {
-        collider = new Rectangle(position.x, position.y, length, WIDTH);
+        collider = new Rectangle((int) position.x, (int) position.y, (int) length, (int) WIDTH);
     }
 
     @Override

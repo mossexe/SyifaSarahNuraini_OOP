@@ -1,4 +1,4 @@
-package com.syifa.frontend;
+package com.syifa.Frontend;
 
 public class GameManager {
     private static GameManager instance;
@@ -7,8 +7,8 @@ public class GameManager {
     private boolean gameActive;
 
     private GameManager() {
-        score = 0;
-        gameActive = false;
+        this.score = 0;
+        this.gameActive = false;
     }
 
     public static GameManager getInstance() {
@@ -30,6 +30,7 @@ public class GameManager {
         }
     }
 
-    // Getters
-    public int getScore() { return score; }
+    public int getScore() {
+        return score;
+    }
 }

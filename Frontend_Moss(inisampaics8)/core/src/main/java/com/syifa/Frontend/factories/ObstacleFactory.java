@@ -1,17 +1,23 @@
-package com.syifa.frontend.factories;
+package com.syifa.Frontend.factories;
 
 import java.util.*;
-import com.syifa.frontend.obstacles.BaseObstacle;
+import com.syifa.Frontend.obstacles.BaseObstacle;
+import com.syifa.Frontend.factories.HorizontalLazerCreator;
+import com.syifa.Frontend.factories.VerticalLazerCreator;
+
 
 public class ObstacleFactory {
-
-    /** Factory Method implementor */
     public interface ObstacleCreator {
-        BaseObstacle create(float groundTopY, float spawnX, float playerHeight, Random rng);
+        BaseObstacle create(float groundTopY, float spawnX, float playerHeight, Random random);
+
         void release(BaseObstacle obstacle);
+
         void releaseAll();
+
         List<? extends BaseObstacle> getInUse();
+
         boolean supports(BaseObstacle obstacle);
+
         String getName();
     }
 
@@ -31,10 +37,8 @@ public class ObstacleFactory {
     private int totalWeight = 0;
 
     public ObstacleFactory() {
-        // Register creators with weights for spawn probability
-        // Vertical: 40%, Horizontal: 40%, Homing Missile: 20%
-        register(new VerticalLaserCreator(), 2);
-        register(new HorizontalLaserCreator(), 2);
+        register(new VerticalLazerCreator(), 2);
+        register(new HorizontalLazerCreator(), 2);
         register(new HomingMissileCreator(), 1);
     }
 
@@ -98,5 +102,3 @@ public class ObstacleFactory {
         return names;
     }
 }
-
-

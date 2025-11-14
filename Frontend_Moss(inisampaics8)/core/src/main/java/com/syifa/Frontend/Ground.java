@@ -1,4 +1,4 @@
-package com.syifa.frontend;
+package com.syifa.Frontend;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -9,13 +9,13 @@ public class Ground {
     private Rectangle collider;
 
     public Ground() {
-        this.collider = new Rectangle(0, 0, Gdx.graphics.getWidth() * 2, GROUND_HEIGHT);
+        collider = new Rectangle(0, 0, Gdx.graphics.getWidth() * 2, GROUND_HEIGHT);
     }
 
     public void update(float cameraX) {
-        float groundWidth = Gdx.graphics.getWidth() * 3;
-        this.collider.setPosition(cameraX - Gdx.graphics.getWidth() / 2f - 500, 0);
-        this.collider.setWidth(groundWidth + 1000);
+        float posX = cameraX - Gdx.graphics.getWidth() / 2f - 500;
+        collider.setPosition(posX, 0);
+        collider.setWidth(Gdx.graphics.getWidth() * 2);
     }
 
     public boolean isColliding(Rectangle playerCollider) {
@@ -26,10 +26,13 @@ public class Ground {
         return GROUND_HEIGHT;
     }
 
-    // Debug
     public void renderShape(ShapeRenderer shapeRenderer) {
-        // Draw ground as gray rectangle
-        shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1f); // Gray color
+        shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1f);
         shapeRenderer.rect(collider.x, collider.y, collider.width, collider.height);
     }
+
+    public void render(ShapeRenderer shapeRenderer) {
+        shapeRenderer.rect(0, 0, Gdx.graphics.getWidth() * 2, GROUND_HEIGHT);
+    }
+
 }

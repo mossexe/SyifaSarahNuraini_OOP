@@ -1,22 +1,25 @@
-package com.syifa.frontend.pools;
+package com.syifa.Frontend.pools;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class ObjectPool<T> {
     private List<T> available = new ArrayList<>();
     private List<T> inUse = new ArrayList<>();
 
     protected abstract T createObject();
+
     protected abstract void resetObject(T object);
 
     public T obtain() {
         T object;
+
         if (available.isEmpty()) {
             object = createObject();
         } else {
             object = available.remove(available.size() - 1);
         }
+
         inUse.add(object);
         return object;
     }
@@ -44,4 +47,3 @@ public abstract class ObjectPool<T> {
         return inUse.size();
     }
 }
-
