@@ -1,29 +1,39 @@
 package com.syifa.frontend.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.Stack;
 
 public class GameStateManager {
-
     private final Stack<GameState> states;
-    public GameStateManager(Stack<GameState> states){
 
-        this.states = new Stack<>();
+    public GameStateManager() {
+        states = new Stack<>();
     }
-    public push(GameState state){
+
+    public void push(GameState state) {
         states.push(state);
-    };
-    public pop(){
+    }
 
-    };
-    public set(GameState state){
+    public void pop() {
+        if (!states.isEmpty()) {
+            states.pop().dispose();
+        }
+    }
 
-    };
-    public update(float delta){
+    public void set(GameState state) {
+        pop();
+        push(state);
+    }
 
-    };
-    public render (SpriteBatch batch){
+    public void update(float delta) {
+        if (!states.isEmpty()) {
+            states.peek().update(delta);
+        }
+    }
 
-    };
+    public void render(SpriteBatch batch) {
+        if (!states.isEmpty()) {
+            states.peek().render(batch);
+        }
+    }
 }
