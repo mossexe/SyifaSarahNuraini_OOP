@@ -11,18 +11,15 @@ import java.util.Random;
 public class VerticalLaserCreator implements ObstacleFactory.ObstacleCreator {
     private static final float MIN_HEIGHT = 100f;
     private static final float MAX_HEIGHT = 300f;
-
     private final VerticalLaserPool pool = new VerticalLaserPool();
 
     @Override
     public BaseObstacle create(float groundTopY, float spawnX, float playerHeight, Random rng) {
         float obstacleHeight = MIN_HEIGHT + (rng.nextFloat() * (MAX_HEIGHT - MIN_HEIGHT));
-
         float minY = groundTopY + playerHeight;
         float maxY = Gdx.graphics.getHeight() - obstacleHeight - playerHeight;
         if (maxY < minY) maxY = minY;
         float randomY = minY + rng.nextFloat() * Math.max(0, maxY - minY);
-
         return pool.obtain(new Vector2(spawnX, randomY), (int) obstacleHeight);
     }
 
@@ -43,4 +40,3 @@ public class VerticalLaserCreator implements ObstacleFactory.ObstacleCreator {
     @Override
     public String getName() { return "VerticalLaser"; }
 }
-

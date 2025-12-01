@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.syifa.frontend.obstacles.HorizontalLaser;
 
 public class HorizontalLaserPool extends ObjectPool<HorizontalLaser> {
-
     @Override
     protected HorizontalLaser createObject() {
         return new HorizontalLaser(new Vector2(0, 0), 100);

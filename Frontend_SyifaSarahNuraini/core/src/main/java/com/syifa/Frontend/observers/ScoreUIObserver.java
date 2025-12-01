@@ -1,8 +1,9 @@
 package com.syifa.frontend.observers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.Color;
 
 public class ScoreUIObserver implements Observer {
     private BitmapFont font;
@@ -16,13 +17,13 @@ public class ScoreUIObserver implements Observer {
 
     @Override
     public void update(int score) {
-        System.out.println("Score has been updated to: " + score);
+        Gdx.app.log("ScoreUI", "Score updated: " + score);
     }
 
-    public void render(int score) {
+    public void render(int score, int coins) {
         batch.begin();
-        font.draw(batch, "Score: " + score, 10,
-            com.badlogic.gdx.Gdx.graphics.getHeight() - 10);
+        font.draw(batch, "Score: " + score, 10, Gdx.graphics.getHeight() - 20);
+        font.draw(batch, "Coins: " + coins, 10, Gdx.graphics.getHeight() - 40);
         batch.end();
     }
 

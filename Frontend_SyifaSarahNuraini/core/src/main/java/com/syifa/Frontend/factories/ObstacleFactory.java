@@ -1,10 +1,9 @@
 package com.syifa.frontend.factories;
 
-import com.syifa.frontend.obstacles.BaseObstacle;
 import java.util.*;
+import com.syifa.frontend.obstacles.BaseObstacle;
 
 public class ObstacleFactory {
-
     public interface ObstacleCreator {
         BaseObstacle create(float groundTopY, float spawnX, float playerHeight, Random rng);
         void release(BaseObstacle obstacle);
@@ -45,7 +44,6 @@ public class ObstacleFactory {
         if (weightedSelection.isEmpty()) {
             return null;
         }
-
         ObstacleCreator creator = selectWeightedCreator();
         return creator.create(groundTopY, spawnX, playerHeight, random);
     }

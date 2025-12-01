@@ -1,7 +1,7 @@
 package com.syifa.frontend.commands;
 
-import com.syifa.frontend.Player;
 import com.syifa.frontend.GameManager;
+import com.syifa.frontend.Player;
 
 public class RestartCommand implements Command {
     private Player player;

@@ -1,7 +1,7 @@
 package com.syifa.frontend.observers;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreManager implements Subject {
     private List<Observer> observers;
@@ -37,6 +37,6 @@ public class ScoreManager implements Subject {
     }
 
     public int getScore() {
-        return this.score;
+        return score;
     }
 }

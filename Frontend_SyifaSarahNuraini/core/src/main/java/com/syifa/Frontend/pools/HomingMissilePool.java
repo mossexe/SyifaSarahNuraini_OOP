@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.syifa.frontend.obstacles.HomingMissile;
 
 public class HomingMissilePool extends ObjectPool<HomingMissile> {
-
     @Override
     protected HomingMissile createObject() {
         return new HomingMissile(new Vector2());

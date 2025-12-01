@@ -21,8 +21,10 @@ public class GameStateManager {
     }
 
     public void set(GameState state) {
-        pop();
-        push(state);
+        if (!states.isEmpty()) {
+            states.pop().dispose();
+        }
+        states.push(state);
     }
 
     public void update(float delta) {

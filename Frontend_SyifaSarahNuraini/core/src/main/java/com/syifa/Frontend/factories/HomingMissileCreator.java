@@ -34,4 +34,3 @@ public class HomingMissileCreator implements ObstacleFactory.ObstacleCreator {
     @Override
     public String getName() { return "HomingMissile"; }
 }
-

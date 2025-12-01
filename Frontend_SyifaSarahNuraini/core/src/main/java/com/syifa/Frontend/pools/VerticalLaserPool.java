@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.syifa.frontend.obstacles.VerticalLaser;
 
 public class VerticalLaserPool extends ObjectPool<VerticalLaser> {
-
     @Override
     protected VerticalLaser createObject() {
         return new VerticalLaser(new Vector2(0, 0), 100);

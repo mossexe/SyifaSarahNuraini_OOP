@@ -1,5 +1,10 @@
 package com.syifa.frontend.obstacles;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -11,10 +16,28 @@ public class HomingMissile extends BaseObstacle {
     private float speed = 200f;
     private float width = 40f;
     private float height = 20f;
+    private TextureRegion texture;
+    private float rotation = 0f;
 
     public HomingMissile(Vector2 startPosition) {
-        super(startPosition,0);
+        super(startPosition, 20);
         this.velocity = new Vector2();
+        try {
+            Texture img = new Texture(Gdx.files.internal("missile.png"));
+            this.texture = new TextureRegion(img);
+        } catch (Exception e) {
+            Gdx.app.error("HomingMissile", "Could not load missile.png, creating placeholder");
+            createPlaceholderTexture();
+        }
+    }
+
+    private void createPlaceholderTexture() {
+        Pixmap pixmap = new Pixmap(40, 20, Pixmap.Format.RGB888);
+        pixmap.setColor(com.badlogic.gdx.graphics.Color.RED);
+        pixmap.fill();
+        Texture img = new Texture(pixmap);
+        pixmap.dispose();
+        this.texture = new TextureRegion(img);
     }
 
     @Override
@@ -29,19 +52,15 @@ public class HomingMissile extends BaseObstacle {
 
     public boolean isTargetingPlayer() {
         if (target == null) return false;
-        float playerCenterX = target.getPosition().x + target.getWidth() / 2f;
-        float missileCenterX = position.x + width / 2f;
-        return playerCenterX <= missileCenterX;
+        return (target.getPosition().x + target.getWidth()/2f) <= (position.x + width/2f);
     }
 
     public void update(float delta) {
         if (target == null || !active) return;
-
         if (isTargetingPlayer()) {
             Vector2 targetPosition = target.getPosition();
             velocity.set(targetPosition).sub(position).nor().scl(speed);
         }
-
         position.add(velocity.x * delta, velocity.y * delta);
         updateCollider();
     }
@@ -59,5 +78,16 @@ public class HomingMissile extends BaseObstacle {
     @Override
     protected float getRenderWidth() {
         return width;
+    }
+
+    public void render(SpriteBatch batch) {
+        if (!active) return;
+        batch.draw(texture,
+            position.x, position.y,
+            width/2, height/2,
+            width, height,
+            1f, 1f,
+            rotation
+        );
     }
 }

@@ -2,37 +2,56 @@ package com.syifa.frontend;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-
-import java.util.Vector;
 
 public class Coin {
     private Vector2 position;
     private Rectangle collider;
     private float radius = 15f;
     private boolean active;
-
     private float bobOffset;
-    private float bobSpeed;
+    private float bobSpeed = 3f;
 
-    public Coin (Vector2 startPosition, Rectangle collider){
-        this.collider = collider;
+    public Coin(Vector2 startPosition) {
+        this.position = new Vector2(startPosition);
+        this.collider = new Rectangle(position.x - radius, position.y - radius, radius * 2, radius * 2);
+        this.active = true;
     }
 
-    public update(float delta){
-        bobOffset = bobSpeed * delta;
-        updatecollider ();
+    public void update(float delta) {
+        bobOffset += bobSpeed * delta;
+        float drawY = position.y + (float)(Math.sin(bobOffset) * 5f);
+        collider.setPosition(position.x - radius, drawY - radius);
     }
 
-    public void renderShape(ShapeRenderer shapeRenderer){
+    public boolean isOffScreenCamera(float cameraLeftEdge) {
+        return position.x + radius < cameraLeftEdge;
+    }
+
+    public void renderShape(ShapeRenderer shapeRenderer) {
+        if (!active) return;
         float drawY = position.y + (float)(Math.sin(bobOffset) * 5f);
         shapeRenderer.setColor(1f, 1f, 0f, 1f);
         shapeRenderer.circle(position.x, drawY, radius);
-        if (!active) return;
     }
 
-    public boolean isColliding(Rectangle playerCollider){
-        return active && collider.overlaps(playerCollider)
-        }
+    public boolean isColliding(Rectangle playerCollider) {
+        return active && collider.overlaps(playerCollider);
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setPosition(float x, float y) {
+        position.set(x, y);
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
 }
